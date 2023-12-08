@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
     string name = argv[1];
 
     // Output the greeting
-    cout << "Hello, " << name << "!" << endl;
+    cout << "Hello, " << name << "!!!" << endl;
 
     return 0;
 }
