@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// funkcja sprawdzaj¹ca wykorzystanie pionka wczeœniej
+// funkcja sprawdzajÄ…ca wykorzystanie pionka wczeÅ›niej
 int spr_wykorzystania(char postawione[17], int pionek, char pionki[16])
 {
     for(int i = 0; i < 17; i++)
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     for(int i = 1; i < 16; i++)
         postawione[i] = '-1';
 
-    // "Wizualizujemy" planszê w tablicy: plansza. Zapisujemy, które figury zosta³y ju¿ wykorzzystane.
+    // "Wizualizujemy" planszÄ™ w tablicy: plansza. Zapisujemy, ktÃ³re figury zostaÅ‚y juÅ¼ wykorzzystane.
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 4; j++)
         {
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     {
         wiersz = rand() % 4;
         kolumna = rand() % 4;
-    } while(plansza[wiersz][kolumna] == 'p');
+    } while(plansza[wiersz][kolumna] != 'p');
 
     do{
         pionek = rand()%16;
