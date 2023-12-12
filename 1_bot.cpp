@@ -24,12 +24,11 @@ int main(int argc, char *argv[])
         fprintf (stderr, "Zla ilosc danych wejsciowych.\n");
         return 1;
     }
-    /*  Sprawdzanie dlugosci stringa - nie wiedzialem czy na koncu wpisują nam znak konca '\0' czy nie, jak sie dowiem to odkomentuje
+    //  Sprawdzanie dlugosci stringa - nie wiedzialem czy na koncu wpisują nam znak konca '\0' czy nie, jak sie dowiem to odkomentuje
     if ( strlen(argv[1]) != 17){
         fprintf (stderr, "String ma miec 17 znakow.\n");
         return 2;
     }
-    */
     
     char plansza[4][4], postawione[17];
     char pionki[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
