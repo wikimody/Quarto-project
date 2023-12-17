@@ -37,7 +37,7 @@ class Console:
                 entry = input(f'To nie jest numer. Podaj numer należący do listy: {posible_numbers} ')
 
     @staticmethod
-    def input_numer_in_range(question, begining_of_range, end_of_range):  # Zadaje pytanie i oddaje liczbę w danym zakresie
+    def input_number_in_range(question, begining_of_range, end_of_range):  # Zadaje pytanie i oddaje liczbę w danym zakresie
         entry = input(question)
         while True:
             if Console.is_int(entry):
