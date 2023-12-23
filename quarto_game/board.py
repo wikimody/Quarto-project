@@ -1,5 +1,5 @@
 from .piece import Piece
-
+from cpp_bots.cpp_adapter import CppAdapter
 
 class Board:
     def __init__(self):  # creates board filled with empty pieces
@@ -22,9 +22,24 @@ class Board:
     # returns True if piece creates a Quarto, False otherwise
     def is_validating(self, piece):  # Temporarly false
         return False
-
-    def format(self):  # returns board in string format "t t ... t t" (t - 16 tile values)
-        " ".join(" ".join(str(tile.decimal()) for tile in row) for row in _board)
+    
+    def is_quarto(self):
+        out = CppAdapter.execute_cpp("cpp_bots/bin/is_quarto.exe", self.format())
+        if out == "1":
+            return True
+        else:
+            return False
+    
+    def format(self):  # returns board in string format 
+        hex_string = ""
+        for row in self._board:
+            for piece in row:
+                if piece.decimal() == -1:
+                    hex_string += 'p'
+                else:
+                    hex_string += hex(piece.decimal())[2:].upper()
+        
+        return hex_string
 
     def __str__(self):
         readable_board = "#|1111|2222|3333|4444|\n"
