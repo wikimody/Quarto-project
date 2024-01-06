@@ -1,4 +1,4 @@
-from interactions.console_interaction import ConsoleInteraction
+from interactions.console_interaction import ConsoleInteraction #zmiane
 
 def start_menu():
     Console.clear_view()   # Czyszczenie ekranu konsoli
