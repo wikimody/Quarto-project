@@ -1,3 +1,5 @@
+from interactions.console_interaction import ConsoleInteraction
+
 def start_menu():
     Console.clear_view()   # Czyszczenie ekranu konsoli
     Console.output("Witaj w grze Quarto!") # Wyświetlanie powitalnego komunikatu
