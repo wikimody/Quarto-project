@@ -46,11 +46,13 @@ if __name__ == "__main__":
         # Po zakończeniu wybranej opcji, wykonaj grę Quarto
 
         if choice == 1:
-            game = QuartoGame(LocalPlayer("A"), LocalPlayer("B"))
+            player1_name = input("Wprowadź nazwę pierwszego gracza: ")
+            player2_name = input("Wprowadź nazwę drugiego gracza: ")
+            game = QuartoGame(LocalPlayer(player1_name), LocalPlayer(player2_name))
             winner = game.start()
             if (winner != None):
-                ConsoleInteraction.output("Zwyciężył gracz %s" % winner)
+                print("Zwyciężył gracz %s" % winner)
             else:
-                ConsoleInteraction.output("їGra zakończyła się remisem")
+                print("Gra zakończyła się remisem")
 
 # Program wraca do menu po zakończeniu gry
