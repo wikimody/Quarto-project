@@ -28,7 +28,7 @@ if __name__ == "__main__":
         start_menu()
 
         try:
-            choice = ConsoleInteraction.input_number_in_range("Wybierz opcję (1-6): ", 1, 6)
+            choice = Console.input_number_in_range("Wybierz opcję (1-6): ", 1, 6)
             if choice == 1:
                 play_with_human()
             elif choice in [2, 3, 4]:
@@ -36,12 +36,12 @@ if __name__ == "__main__":
             elif choice == 5:
                 show_rules()
             elif choice == 6:
-                ConsoleInteraction.output("Dziękujemy za grę. Do widzenia!")
+                Console.output("Dziękujemy za grę. Do widzenia!")
                 break
             else:
-                ConsoleInteraction.output("Podaj numer opcji.")
+                Console.output("Podaj numer opcji.")
         except ValueError:
-            ConsoleInteraction.output("Podaj numer opcji.")
+            Console.output("Podaj numer opcji.")
 
         # Po zakończeniu wybranej opcji, wykonaj grę Quarto
 
