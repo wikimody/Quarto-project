@@ -13,7 +13,15 @@ def start_menu():
     Console.output("6. Wyjdź z gry")
 
 def play_with_human():
-    Console.output("Rozpoczynamy nową grę z drugim graczem!")  # Wyświetlanie komunikatu rozpoczęcia gry z drugim graczem 
+    Console.output("Rozpoczynamy nową grę z drugim graczem!")  # Wyświetlanie komunikatu rozpoczęcia gry z drugim graczem
+    player1_name = input("Wprowadź nazwę pierwszego gracza: ")
+    player2_name = input("Wprowadź nazwę drugiego gracza: ")
+    game = QuartoGame(LocalPlayer(player1_name), LocalPlayer(player2_name))
+    winner = game.start()
+    if (winner != None):
+        print("Zwyciężył gracz %s" % winner)
+    else:
+        print("Gra zakończyła się remisem")
 
 def play_with_bot(level):
     Console.output(f"Rozpoczynamy nową grę z botem!")  # Wyświetlanie komunikatu rozpoczęcia gry z botem
@@ -44,15 +52,4 @@ if __name__ == "__main__":
             Console.output("Podaj numer opcji.")
 
         # Po zakończeniu wybranej opcji, wykonaj grę Quarto
-
-        if choice == 1:
-            player1_name = input("Wprowadź nazwę pierwszego gracza: ")
-            player2_name = input("Wprowadź nazwę drugiego gracza: ")
-            game = QuartoGame(LocalPlayer(player1_name), LocalPlayer(player2_name))
-            winner = game.start()
-            if (winner != None):
-                print("Zwyciężył gracz %s" % winner)
-            else:
-                print("Gra zakończyła się remisem")
-
-# Program wraca do menu po zakończeniu gry
+        # Program wraca do menu po zakończeniu gry
