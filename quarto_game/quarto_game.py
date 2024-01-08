@@ -98,7 +98,7 @@ class QuartoGame:
                     while not quarto_call.upper() in ("T", "TAK", "N", "NIE"):
                         quarto_call = input("Odpowiedź musi być w formacie TAK lub NIE [t/n]: ")
                     if quarto_call.upper() in ("T", "TAK"):
-                        if self._board.is_validating(piece):
+                        if self._board.is_quarto():
                             return other_player  # players successfuly calls Quarto and wins the game
                         input("Podana figura nie tworzy Quarto, wciśnij Enter, aby kontynuować...")
                     break  # piece is placed - breaks the loop
