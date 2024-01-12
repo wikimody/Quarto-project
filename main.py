@@ -1,6 +1,6 @@
 from players.local_player import LocalPlayer 
 from quarto_game.quarto_game import QuartoGame
-from interactions.console import class Console
+from interactions.console import Console
 
 def start_menu():
     Console.clear_view()   # Czyszczenie ekranu konsoli
