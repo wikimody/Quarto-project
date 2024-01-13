@@ -239,6 +239,39 @@ int main(int argc, char *argv[])
         }
     }
 
+    if(wygrana_x == -1 && wygrana_y == -1)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            for(int j = 0; j < 4; j++)
+            {
+                if(plansza[i][j] == 16 && przegrana[i][j] != -1)
+                {
+                    wygrana_x = i;
+                    wygrana_y = j;
+                    break;
+                }
+            }
+            if(wygrana_x != -1 && wygrana_y != -1) break;
+        }
+
+        if(wygrana_x == -1 && wygrana_y == -1)//gdy nie mamy pola potencjalnie dajacemu wygrana przeciwnikowi
+        for(int i = 0; i < 4; i++)
+        {
+            for(int j = 0; j < 4; j++)
+            {
+                if(plansza[i][j] == 16)
+                {
+                    wygrana_x = i;
+                    wygrana_y = j;
+                    break;
+                }
+            }
+            if(wygrana_x != -1 && wygrana_y != -1) break;
+        }
+    }
+
+
 
     /* cout << "Wygrane x, y: " << wygrana_x << ", " << wygrana_y << endl;
      for(int i = 0; i < 4; i ++)
