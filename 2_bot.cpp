@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
         }
         cout << endl;
     }
-    postawione[licznik] = argv[1][licznik]; // pionek ktory dostalismy????????
+    postawione[licznik] = zamiana_pionkow(argv[1][licznik]); // pionek ktory dostalismy????????
 
     int pionki_do_sprawdzenia[4] = {16, 16, 16, 16}, ilosc_pionkow = 0, wygrana_x = -1, wygrana_y = -1;
 
