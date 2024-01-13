@@ -24,6 +24,29 @@ int zamiana_pionkow(char pionek)
 	return (int)pionek;
 }
 
+bool czy_istnieje_cecha(int p[4]) //zwraca 0 lub 1 w zaleznosci od tego czy istnieje cecha wspolna
+{
+	cout<<"Funkcja wywolana"<<endl;
+	for(int i = 0; i < 4; i++) if(p[i] > 16 || p[i] < 0)return 0//sprawdzenie poprawnosci argumentow
+
+	
+	short int zapis = (1 << 4)-1 , znegacja = zapis; //short ma 4 bity, zapisy na poczatku musza byc ustawione na '1111'
+	for(int i = 0; i < 4; i++)
+	{
+		if(p[i] != 16)//jesli pole niepuste
+		{
+			zapis &= p[i]; //sprawdzenie dla 1
+			znegacja &= ~(p[i]); //sprawdzenie dla 0
+		}
+		
+	}
+	
+	if((zapis & (1 << 4)-1) != 0 || (znegacja & (1 << 4)-1) != 0) //- wiaze mocniej niz & wiec kolejnosc bedzie poprawna 
+	{
+		return 1;
+	}
+	return 0;
+}
 
 int main(int argc, char *argv[])
 {
@@ -283,6 +306,6 @@ int main(int argc, char *argv[])
     }
     // jesli pionek == 16 to wybieramy pierwszego dostepnego i niestety przegrywamy
 
-    cout << wygrana_x << wygrane_y << pionek << endl;
+    cout << wygrana_x << wygrana_y << pionek << endl;
     return 0;
 }
