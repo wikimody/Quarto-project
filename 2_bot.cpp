@@ -25,7 +25,6 @@ int zamiana_pionkow(char pionek)
 }
 
 
-
 int main(int argc, char *argv[])
 {
     int plansza[4][4], postawione[17], pionki[16]; //postawione[0.. 15] - uzyte pionki, postawione[16] - pionek do postawienia
@@ -64,6 +63,7 @@ int main(int argc, char *argv[])
             if(plansza[i][j] != 16)
             {
                 pionki_do_sprawdzenia[ilosc_pionkow] = plansza[i][j];
+                cout << pionki_do_sprawdzenia[ilosc_pionkow] << " ";
                 ilosc_pionkow++;
             }
             else // gdy puste pole to mamy potencjalne pole do wygranej
@@ -72,17 +72,20 @@ int main(int argc, char *argv[])
                 wygrana_y = j;
             }
         }
+        cout <<  endl;
+
 
         if(ilosc_pionkow == 3) //sprawdzamy czy mozemy dostawic czwarty pionek by wygrac
         {
             pionki_do_sprawdzenia[ilosc_pionkow] = postawione[16];
-            if(ktore_cechy_wspolne(pionki_do_sprawdzenia) == 1) break;
+            if(czy_istnieje_cecha(pionki_do_sprawdzenia) == 1) break;
+            //cout << "Wygrane x, y: " << wygrana_x << ", " << wygrana_y << endl;
             wygrana_x = -1, wygrana_y = -1;
         }
-        else(ilosc_pionkow == 2) //sprawdzamy czy jesli dostawimy trzeci pionek to przeciwnik bedzie mogl wygrac
+        else if (ilosc_pionkow == 2) //sprawdzamy czy jesli dostawimy trzeci pionek to przeciwnik bedzie mogl wygrac
         {
             pionki_do_sprawdzenia[ilosc_pionkow] = postawione[16];
-            if(ktore_cechy_wspolne(pionki_do_sprawdzenia) == 1)
+            if(czy_istnieje_cecha(pionki_do_sprawdzenia) == 1)
             {
                 for(int j = 0; j < 4; j++)
                 {
@@ -94,9 +97,157 @@ int main(int argc, char *argv[])
 
         for(int j = 0; j < 4; j++)
             pionki_do_sprawdzenia[j] = 16;
-
      }
+
+
+
+    //sprawdzanie w kolumnach
+    if(wygrana_x == -1 && wygrana_y == -1)
+    {
+        for(int j = 0; j < 4; j++)
+         {
+            ilosc_pionkow = 0;
+            for(int i = 0; i < 4; i++)//przepisywanie pionkow w wierszu, jesli wystepuja
+            {
+                if(plansza[i][j] != 16)
+                {
+                    pionki_do_sprawdzenia[ilosc_pionkow] = plansza[i][j];
+                    //cout << pionki_do_sprawdzenia[ilosc_pionkow] << " ";
+                    ilosc_pionkow++;
+                }
+                else // gdy puste pole to mamy potencjalne pole do wygranej
+                {
+                    wygrana_x = i;
+                    wygrana_y = j;
+                }
+            }
+           // cout <<  endl;
+
+
+            if(ilosc_pionkow == 3) //sprawdzamy czy mozemy dostawic czwarty pionek by wygrac
+            {
+                pionki_do_sprawdzenia[ilosc_pionkow] = postawione[16];
+                if(czy_istnieje_cecha(pionki_do_sprawdzenia) == 1) break;
+                //cout << "Wygrane x, y: " << wygrana_x << ", " << wygrana_y;
+                wygrana_x = -1, wygrana_y = -1;
+            }
+            else if (ilosc_pionkow == 2) //sprawdzamy czy jesli dostawimy trzeci pionek to przeciwnik bedzie mogl wygrac
+            {
+                pionki_do_sprawdzenia[ilosc_pionkow] = postawione[16];
+                if(czy_istnieje_cecha(pionki_do_sprawdzenia) == 1)
+                {
+                    for(int i = 0; i < 4; i++)
+                    {
+                        if(plansza[i][j] == 16)
+                            przegrana[i][j] = -1;
+                    }
+                }
+            }
+
+            for(int i = 0; i < 4; i++)
+                pionki_do_sprawdzenia[i] = 16;
+         }
+    }
+
+    //sprawdzanie po skosie (lewa gora - prawa dol)
+   if(wygrana_x == -1 && wygrana_y == -1)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            ilosc_pionkow = 0;
+            if(plansza[i][i] != 16)
+            {
+                pionki_do_sprawdzenia[ilosc_pionkow] = plansza[i][i];
+                //cout << pionki_do_sprawdzenia[ilosc_pionkow] << " ";
+                ilosc_pionkow++;
+            }
+            else // gdy puste pole to mamy potencjalne pole do wygranej
+            {
+                wygrana_x = i;
+                wygrana_y = i;
+            }
+            //cout <<  endl;
+
+            if(ilosc_pionkow == 3) //sprawdzamy czy mozemy dostawic czwarty pionek by wygrac
+            {
+                pionki_do_sprawdzenia[ilosc_pionkow] = postawione[16];
+                if(czy_istnieje_cecha(pionki_do_sprawdzenia) == 1) break;
+                    //cout << "Wygrane x, y: " << wygrana_x << ", " << wygrana_y << endl;
+                wygrana_x = -1, wygrana_y = -1;
+            }
+            else if (ilosc_pionkow == 2) //sprawdzamy czy jesli dostawimy trzeci pionek to przeciwnik bedzie mogl wygrac
+            {
+                pionki_do_sprawdzenia[ilosc_pionkow] = postawione[16];
+                if(czy_istnieje_cecha(pionki_do_sprawdzenia) == 1)
+                {
+                    for(int j = 0; j < 4; j++)
+                    {
+                        if(plansza[j][j] == 16)
+                            przegrana[j][j] = -1;
+                    }
+                }
+            }
+
+            for(int j = 0; j < 4; j++)
+                pionki_do_sprawdzenia[j] = 16;
+
+        }
+    }
+
+    //sprawdzanie po skosie (lewa dol - prawa gora)
+    if(wygrana_x == -1 && wygrana_y == -1)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            ilosc_pionkow = 0;
+            if(plansza[3 - i][i] != 16)
+            {
+                pionki_do_sprawdzenia[ilosc_pionkow] = plansza[3 - i][i];
+               // cout << pionki_do_sprawdzenia[ilosc_pionkow] << " ";
+                ilosc_pionkow++;
+            }
+            else // gdy puste pole to mamy potencjalne pole do wygranej
+            {
+                wygrana_x = 3 - i;
+                wygrana_y = i;
+            }
+            //cout <<  endl;
+
+            if(ilosc_pionkow == 3) //sprawdzamy czy mozemy dostawic czwarty pionek by wygrac
+            {
+                pionki_do_sprawdzenia[ilosc_pionkow] = postawione[16];
+                if(czy_istnieje_cecha(pionki_do_sprawdzenia) == 1) break;
+                    //cout << "Wygrane x, y: " << wygrana_x << ", " << wygrana_y << endl;
+                wygrana_x = -1, wygrana_y = -1;
+            }
+            else if (ilosc_pionkow == 2) //sprawdzamy czy jesli dostawimy trzeci pionek to przeciwnik bedzie mogl wygrac
+            {
+                pionki_do_sprawdzenia[ilosc_pionkow] = postawione[16];
+                if(czy_istnieje_cecha(pionki_do_sprawdzenia) == 1)
+                {
+                    for(int j = 0; j < 4; j++)
+                    {
+                        if(plansza[3 - j][j] == 16)
+                            przegrana[3 - j][j] = -1;
+                    }
+                }
+            }
+
+            for(int j = 0; j < 4; j++)
+                pionki_do_sprawdzenia[j] = 16;
+
+        }
+    }
+
+
+    /* cout << "Wygrane x, y: " << wygrana_x << ", " << wygrana_y << endl;
+     for(int i = 0; i < 4; i ++)
+     {
+         for(int j = 0; j < 4; j++)
+            cout << przegrana[i][j] << " ";
+        cout << endl;
+     }*/
+
 
     return 0;
 }
-
