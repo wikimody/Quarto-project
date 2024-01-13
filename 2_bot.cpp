@@ -5,11 +5,11 @@
 using namespace std;
 
 // funkcja sprawdzajaca wykorzystanie pionka wczesniej
-int spr_wykorzystania(char postawione[17], int pionek, char pionki[16])
+int spr_wykorzystania(int postawione[17], int pionek)
 {
     for(int i = 0; i < 17; i++)
     {
-        if(pionki[pionek] == postawione[i]) return 0;
+        if(pionek == postawione[i]) return 0;
     }
     return 1;
 }
@@ -272,15 +272,17 @@ int main(int argc, char *argv[])
     }
 
 
+    int pionek = 16;
+    for(int i = 0; i < 16; i++)//wybieranie pionka dla przeciwnika
+    {
+        if(spr_wykorzystania(postawione, pionki[i]) == 1)
+        {
+            // tutaj funkcja sprawdzajaca wiersze, kolumny i skosy dla wylosowanego pionka (mozna wykorzystac sprawdzenie dla naszego pionka napisane powyzej
+            //jesli funkcja zwroci ze ten pionek nie wygrywa to pionek = pionki[i]; break;
+        }
+    }
+    // jesli pionek == 16 to wybieramy pierwszego dostepnego i niestety przegrywamy
 
-    /* cout << "Wygrane x, y: " << wygrana_x << ", " << wygrana_y << endl;
-     for(int i = 0; i < 4; i ++)
-     {
-         for(int j = 0; j < 4; j++)
-            cout << przegrana[i][j] << " ";
-        cout << endl;
-     }*/
-
-
+    cout << wygrana_x << wygrane_y << pionek << endl;
     return 0;
 }
