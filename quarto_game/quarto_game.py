@@ -1,15 +1,16 @@
 import random
 
-from .board import Board
+from interactions.debug_console import Console
 from .piece import Piece
 
+from cpp_bots.cpp_adapter import CppAdapter
 
 class QuartoGame:
-    def __init__(self, player1, player2):
+    def __init__(self, board, player1, player2):
+        self._board = board
         self._players = [player1, player2]
         self._turn = random.randint(0, 1)
         self._avaliable_pieces = [Piece(val) for val in range(16)]
-        self._board = Board()
 
     def next_turn(self):
         self._turn = (self._turn + 1) % 2
@@ -26,6 +27,9 @@ class QuartoGame:
             if piece.decimal() == piece_value:
                 return piece
         return None
+
+    def avaliable_piece_values(self):
+        return [piece.decimal() for piece in self._avaliable_pieces]
 
     # returns list of pieces in readable format (string)
     def format_avaliable_pieces(self):
@@ -53,13 +57,13 @@ class QuartoGame:
         return readable_pieces
 
     def display_preturn_state(self):
-        print(self._board)
-        print("Kolej gracza %s" % self.current_player())
-        print("Dostępne figury: \n%s" % self.format_avaliable_pieces())
+        Console.output(self._board)
+        Console.output("Kolej gracza %s" % self.current_player())
+        Console.output("Dostępne figury: \n%s" % self.format_avaliable_pieces())
 
     def display_postturn_state(self):
-        print(self._board)
-        print("Gracz %s stawia figurę." % self.other_player())
+        Console.output(self._board)
+        Console.output("Gracz %s stawia figurę." % self.other_player())
 
     def start(self):
         # Game is going on while there are pieces to choose from
@@ -70,46 +74,27 @@ class QuartoGame:
             self.display_preturn_state()
 
             # current player chooses piece for the opponent
-            piece_value = input("Wybierz figurę dla przeciwnika: ")
-            piece = self.find_piece(int(piece_value)) if piece_value.isnumeric() else None
-            while piece == None:
-                piece_value = input("Figura o podanej wartości nie istnieje, wybierz inną: ")
-                piece = self.find_piece(int(piece_value)) if piece_value.isnumeric() else None
+            piece_value = current_player.choose_piece(self.avaliable_piece_values())
+            piece = self.find_piece(piece_value)
             self._avaliable_pieces.remove(piece)
 
-            self.clear_view()
+            Console.clear_view()
             self.display_postturn_state()
 
-            print("Otrzymana figura: \n%s" % piece)
+            Console.output("Otrzymana figura: \n%s" % piece)
             while True:  # loops until piece is correctly placed on board
-                row = input("Wybierz rząd (1-4): ")
-                while not (row.isnumeric() and 1 <= int(row) <= 4):
-                    row = input("Wybrany rząd nie istnieje, ponów wybór: ")
-                row = int(row)
-
-                col = input("Wybierz kolumnę (1-4): ")
-                while not (col.isnumeric() and 1 <= int(col) <= 4):
-                    col = input("Wybrana kolumna nie istnieje, ponów wybór: ")
-                col = int(col)
+                row, col = other_player.place_piece(piece)
 
                 if self._board.is_avaliable(row, col):  # True if piece can be correctly placed
                     self._board.place(piece, row, col)
-                    quarto_call = input("Czy chcesz zawołać Quarto? Wybierz TAK/NIE [t/n]: ")
-                    while not quarto_call.upper() in ("T", "TAK", "N", "NIE"):
-                        quarto_call = input("Odpowiedź musi być w formacie TAK lub NIE [t/n]: ")
-                    if quarto_call.upper() in ("T", "TAK"):
-                        if self._board.is_quarto():
-                            return other_player  # players successfuly calls Quarto and wins the game
-                        input("Podana figura nie tworzy Quarto, wciśnij Enter, aby kontynuować...")
+                    if self._board.is_quarto(): # placed piece created a winning board
+                        return other_player
                     break  # piece is placed - breaks the loop
 
-                print("Wybrane pole jest zajęte, wybierz inne.")
+                Console.output("Wybrane pole jest zajęte, wybierz inne.")
 
-            self.clear_view()
+            Console.clear_view()
             self.next_turn()
 
-        self.clear_view()
+        Console.clear_view()
         return None  # game ends without anyoune winning
-
-    def clear_view(self):
-        print("\n" * 28)
