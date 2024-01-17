@@ -1,16 +1,21 @@
 import socket
 
 from .network_base import NetworkBase
-
+import urllib.request
 
 class PlayerServer(NetworkBase):
     def __init__(self, host="0.0.0.0", port=12345):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_address = (host, port)
+        self.external_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
+        self.client_socket = None
+        self.client_address = None
+        self.start()
 
     def start(self):
         self.server_socket.bind(self.server_address)
         self.server_socket.listen(1)
+        print(f'IP: {self.external_ip} Port: {self.server_address[1]}')
         print('Oczekiwanie połączenia...')
         self.client_socket, self.client_address = self.server_socket.accept()
         print('Połączono z', self.client_address)

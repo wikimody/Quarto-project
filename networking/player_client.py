@@ -4,9 +4,10 @@ from .network_base import NetworkBase
 
 
 class PlayerClient(NetworkBase):
-    def __init__(self, host, port):
+    def __init__(self, host="localhost", port=12345):
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_address = (host, port)
+        self.connect()
 
     def connect(self):
         self.client_socket.connect(self.server_address)
