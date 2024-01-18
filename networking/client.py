@@ -7,9 +7,9 @@ class Client(NetworkBase):
     def __init__(self, host="localhost", port=12345):
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_address = (host, port)
-        self.connect()
+        self.connect_to_server()
 
-    def connect(self):
+    def connect_to_server(self):
         self.client_socket.connect(self.server_address)
 
     def send_message(self, message):

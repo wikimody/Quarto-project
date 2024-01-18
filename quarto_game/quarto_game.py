@@ -38,20 +38,20 @@ class QuartoGame:
             piece_value = piece.decimal()
             # column spacing adjusting
             if piece_value < 10:
-                readable_pieces += " %d|" % piece_value
+                readable_pieces += f"  {piece_value}  |"
             else:
-                readable_pieces += "%d|" % piece_value
+                readable_pieces += f"  {piece_value} |"
         readable_pieces += "\n"
-        readable_pieces += "|--" * len(self._avaliable_pieces) + "|\n"
+        readable_pieces += "|-----" * len(self._avaliable_pieces) + "|\n"
 
         readable_pieces += "|"
         for piece in self._avaliable_pieces:
-            readable_pieces += "%d%d|" % (piece.binary()[0], piece.binary()[1])
+            readable_pieces += f" {piece.symbolic()[0]} {piece.symbolic()[1]} |"
         readable_pieces += "\n"
 
         readable_pieces += "|"
         for piece in self._avaliable_pieces:
-            readable_pieces += "%d%d|" % (piece.binary()[2], piece.binary()[3])
+            readable_pieces += f" {piece.symbolic()[2]} {piece.symbolic()[3]} |"
         readable_pieces += "\n"
 
         return readable_pieces

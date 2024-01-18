@@ -10,9 +10,9 @@ class Server(NetworkBase):
         self.external_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
         self.client_socket = None
         self.client_address = None
-        self.start()
+        self.start_server()
 
-    def start(self):
+    def start_server(self):
         self.server_socket.bind(self.server_address)
         self.server_socket.listen(1)
         print(f'IP: {self.external_ip} Port: {self.server_address[1]}')
