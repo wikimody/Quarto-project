@@ -1,5 +1,8 @@
 from players.local_player import LocalPlayer
 from players.artificial_player import ArtificialPlayer
+from players.remote_player import RemotePlayer
+from networking.server import Server
+from networking.client import Client
 from quarto_game.board import Board
 from quarto_game.quarto_game import QuartoGame
 from interactions.debug_console import Console
@@ -14,6 +17,7 @@ def start_menu(page = 1):
         Console.output("5. Starcie botów")
         Console.output("6. Zasady gry")
         Console.output("7. Wyjdź z gry")
+        Console.output("8. Graj z człowiekiem ONLINE")
     else:
         Console.output("Wybierz poziomy zaawansowania botów")
         Console.output("1. P1 vs P1")
@@ -33,6 +37,32 @@ def play_with_human():
     winner = game.start()
     if (winner != None):
         Console.output("Zwyciężył gracz %s" % winner)
+    else:
+        Console.output("Gra zakończyła się remisem")
+
+def play_via_network():
+    Console.clear_view()
+    board = Board()
+    if Console.input_yes_or_no("Czy ty zaczynasz grę"):
+        player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: "))
+        server = Server()
+        player2 = RemotePlayer(server)
+        game = QuartoGame(board, player1, player2)
+        game._turn = 0
+    else:
+        player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: "))
+        print("Podaj dane do podłączenia:")
+        ip = input("IP(lub localhost): ")
+        port = int(input("Port: "))
+        client = Client(ip, port)
+        player2 = RemotePlayer(client)
+        game = QuartoGame(board, player1, player2)
+        game._turn = 1
+    winner = game.start()
+    if (winner == player1):
+        Console.output("Zwyciężyłeś")
+    elif (winner == player2):
+        Console.output("Zwyciężył ZDALNY")
     else:
         Console.output("Gra zakończyła się remisem")
 
@@ -82,7 +112,7 @@ def show_rules():
 if __name__ == "__main__":
     while True:
         start_menu(1)
-        choice = Console.input_number_in_range("Wybierz opcję (1-7): ", 1, 7)
+        choice = Console.input_number_in_range("Wybierz opcję (1-8): ", 1, 8)
         if choice == 1:
             play_with_human()
         elif choice in [2, 3, 4]:
@@ -102,6 +132,8 @@ if __name__ == "__main__":
         elif choice == 7:
             Console.output("Dziękujemy za grę. Do widzenia!")
             break
+        elif choice == 8:
+            play_via_network()
 
         # Po zakończeniu wybranej opcji, wykonaj grę Quarto
         # Program wraca do menu po zakończeniu gry

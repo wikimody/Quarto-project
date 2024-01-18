@@ -3,7 +3,7 @@ import socket
 from .network_base import NetworkBase
 
 
-class PlayerClient(NetworkBase):
+class Client(NetworkBase):
     def __init__(self, host="localhost", port=12345):
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_address = (host, port)
