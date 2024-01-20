@@ -194,6 +194,7 @@ def choice (table):
 
         pass
 
+    WindowOne(stage,table)
     return table,
 
 
@@ -250,8 +251,7 @@ def WindowOne (wchich,table): #pierwsze menu
 table = [[-1]*4 for _ in range(4)]
 
 
-for n in range(16):
-    table = WindowOne(n,table)
+WindowOne(0,table)
 
 ending()
 
