@@ -1,6 +1,8 @@
 import subprocess
 import platform
 from quarto_game.board import Board
+
+
 def execute_cpp(program_path : str, program_args : str) -> str:
     run_args = [program_path] + program_args.split(sep = " ")
 
@@ -9,6 +11,7 @@ def execute_cpp(program_path : str, program_args : str) -> str:
     
     result = subprocess.run(run_args, capture_output=True, encoding='utf-8')
     return result.stdout
+
 
 def generate_args(board : Board, piece_choice : int) -> str:
     result = ""
@@ -20,3 +23,8 @@ def generate_args(board : Board, piece_choice : int) -> str:
                 result += hex(board[i][j].decimal)[2::]
     result += hex(piece_choice)[2::]
     return result
+
+
+def receive_args(receive : str) -> list:
+    tmp = receive.split(sep = '')
+    return [int(tmp[0]), int(tmp[1]), int(tmp[2], 16)]
