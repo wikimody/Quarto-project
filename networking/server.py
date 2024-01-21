@@ -15,10 +15,11 @@ class Server(NetworkBase):
     def start_server(self):
         self.server_socket.bind(self.server_address)
         self.server_socket.listen(1)
+        print("Dane do nawiązania połączenia z serwerem:")
         print(f'IP: {self.external_ip} Port: {self.server_address[1]}')
         print('Oczekiwanie połączenia...')
         self.client_socket, self.client_address = self.server_socket.accept()
-        print('Połączono z', self.client_address)
+        print(f'Połączono z klientem: {self.client_address}')
 
     def receive_message(self):
         data = self.client_socket.recv(1024)

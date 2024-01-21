@@ -6,10 +6,10 @@ from .piece import Piece
 from cpp_bots.cpp_adapter import CppAdapter
 
 class QuartoGame:
-    def __init__(self, board, player1, player2):
+    def __init__(self, board, player1, player2, turn=0):
         self._board = board
         self._players = [player1, player2]
-        self._turn = random.randint(0, 1)
+        self._turn = turn
         self._avaliable_pieces = [Piece(val) for val in range(16)]
 
     def next_turn(self):

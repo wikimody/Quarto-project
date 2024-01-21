@@ -11,6 +11,7 @@ class Client(NetworkBase):
 
     def connect_to_server(self):
         self.client_socket.connect(self.server_address)
+        print(f"Połączono z serwerem: {self.server_address}")
 
     def send_message(self, message):
         self.client_socket.send(message.encode())

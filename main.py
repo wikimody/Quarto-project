@@ -5,6 +5,7 @@ from networking.server import Server
 from networking.client import Client
 from quarto_game.board import Board
 from quarto_game.quarto_game import QuartoGame
+from quarto_game.quarto_via_network import QuartoViaNetwork
 from interactions.debug_console import Console
 
 def start_menu(page = 1):
@@ -47,17 +48,15 @@ def play_via_network():
         player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: "))
         server = Server()
         player2 = RemotePlayer(server)
-        game = QuartoGame(board, player1, player2)
-        game._turn = 0
+        game = QuartoViaNetwork(board, player1, player2, 0)
     else:
         player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: "))
-        print("Podaj dane do podłączenia:")
-        ip = input("IP(lub localhost): ")
+        print("Wprowadź dane hosta:")
+        host = input("IP hosta (lub localhost): ")
         port = int(input("Port: "))
-        client = Client(ip, port)
+        client = Client(host, port)
         player2 = RemotePlayer(client)
-        game = QuartoGame(board, player1, player2)
-        game._turn = 1
+        game = QuartoViaNetwork(board, player1, player2, 1)
     winner = game.start()
     if (winner == player1):
         Console.output("Zwyciężyłeś")
