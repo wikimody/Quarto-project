@@ -1,5 +1,6 @@
 import os
 
+
 class CppAdapter:
     @staticmethod
     def compile_cpp(cpp_name, executable_name):

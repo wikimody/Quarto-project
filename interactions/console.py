@@ -1,12 +1,13 @@
 import os
 
+
 class Console:
     @staticmethod
     def clear_view():  # Czyszczenie ekranu DZIAŁA TYLKO NA LINUXS!!!
         os.system('clear')
 
     @staticmethod
-    def output(text = ""):  # Pisze wysłany tekst
+    def output(text=""):  # Pisze wysłany tekst
         print(text)
 
     @staticmethod
@@ -26,16 +27,19 @@ class Console:
                 entry = input(f'To nie jest liczba. Podaj liczbę należącą do listy: {posible_numbers} ')
 
     @staticmethod
-    def input_number_in_range(question, begining_of_range, end_of_range):  # Zadaje pytanie i oddaje liczbę w danym zakresie
+    def input_number_in_range(question, begining_of_range,
+                              end_of_range):  # Zadaje pytanie i oddaje liczbę w danym zakresie
         entry = input(question)
         while True:
             try:
                 number = int(entry)
                 if begining_of_range <= number <= end_of_range:
                     return number
-                entry = input(f'Ta liczba nie znajduje się w zakresie. Podaj liczbę całkowitą znajdującą się w zakresie: {begining_of_range} do {end_of_range} ')
+                entry = input(
+                    f'Ta liczba nie znajduje się w zakresie. Podaj liczbę całkowitą znajdującą się w zakresie: {begining_of_range} do {end_of_range} ')
             except ValueError:
-                entry = input(f'To nie jest liczba. Podaj liczbę całkowitą znajdującą się w zakresie: {begining_of_range} do {end_of_range} ')            
+                entry = input(
+                    f'To nie jest liczba. Podaj liczbę całkowitą znajdującą się w zakresie: {begining_of_range} do {end_of_range} ')
 
     @staticmethod
     def input_yes_or_no(question):  # Zadaje pytanie i zwraca True dla tak i False dle nie
