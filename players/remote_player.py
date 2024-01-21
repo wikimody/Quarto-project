@@ -8,7 +8,7 @@ class RemotePlayer(Player):
     def choose_piece(self, piece_values):
         pass
 
-    def where_place_piece(self, piece):
+    def where_place_piece(self, piece=None, board=None):
         pass
 
     def __str__(self):

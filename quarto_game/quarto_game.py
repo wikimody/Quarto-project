@@ -15,9 +15,6 @@ class QuartoGame:
     def current_player(self):
         return self._players[self._turn]
 
-    def opponent_player(self):
-        return self._players[(self._turn + 1) % 2]
-
     # returns piece with given value (returns None if not found)
     def get_piece(self, piece_value):
         for piece in self._avaliable_pieces:
@@ -53,45 +50,41 @@ class QuartoGame:
 
         return readable_pieces
 
-    def display_preturn_state(self):
+    def display_to_place_piece(self, piece):
+        Console.clear_view()
         Console.output(self._board)
-        Console.output(f"Gracz {str(self.current_player()).upper()} wybiera figurę")
-        Console.output(f"Dostępne figury: \n{self.format_avaliable_pieces()}")
+        Console.output(f"{str(self.current_player()).upper()} stawia tego pionka: \n{piece}")
 
-    def display_postturn_state(self):
+    def display_to_choose_piece(self):
+        Console.clear_view()
         Console.output(self._board)
-        Console.output(f"Gracz {str(self.opponent_player()).upper()} stawia figurę.")
+        Console.output(
+            f"{str(self.current_player()).upper()} wybiera dla przeciwnika jednego z tych pionków:\n{self.format_avaliable_pieces()}")
 
     def start(self):
+        self.display_to_choose_piece()
+        chosen_piece = self.get_piece(
+            self.current_player().choose_piece(self.avaliable_pieces_values()))  # choose first piece for opponent
+        self.switch_turn()
+
         # Game is going on while there are pieces to choose from
         while len(self._avaliable_pieces):
-            current_player = self.current_player()  # player that picks a piece
-            other_player = self.opponent_player()  # player that places it down
+            self.display_to_place_piece(chosen_piece)
+            row, col = self.current_player().where_place_piece(chosen_piece,
+                                                               self._board)  # this should return correct row and col
+            self._board.place(chosen_piece, row, col)
+            self._avaliable_pieces.remove(chosen_piece)
 
-            self.display_preturn_state()
+            if self._board.is_quarto():  # placed piece created a winning board
+                Console.clear_view()
+                Console.output(self._board)
+                return self.current_player()
 
-            # current player chooses piece for the opponent
-            piece_value = current_player.choose_piece(self.avaliable_pieces_values())
-            piece = self.get_piece(piece_value)
-            self._avaliable_pieces.remove(piece)
+            self.display_to_choose_piece()  # current player chooses piece for the opponent
+            chosen_piece = self.get_piece(self.current_player().choose_piece(self.avaliable_pieces_values()))
 
-            Console.clear_view()
-            self.display_postturn_state()
-
-            Console.output(f"Figura do postawienia: \n{piece}")
-            while True:  # loops until piece is correctly placed on board
-                row, col = other_player.where_place_piece(piece)
-
-                if self._board.is_avaliable(row, col):  # True if piece can be correctly placed
-                    self._board.place(piece, row, col)
-                    if self._board.is_quarto():  # placed piece created a winning board
-                        return other_player
-                    break  # piece is placed - breaks the loop
-
-                Console.output("Wybrane pole jest zajęte, wybierz inne.")
-
-            Console.clear_view()
             self.switch_turn()
 
         Console.clear_view()
-        return None  # game ends without anyoune winning
+        Console.output(self._board)
+        return None  # game ends without anyone winning

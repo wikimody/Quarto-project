@@ -38,7 +38,7 @@ def play_with_human():
     player2 = LocalPlayer(Console.input_text("Wprowadź nazwę drugiego gracza: "))
     game = QuartoGame(board, player1, player2)
     winner = game.start()
-    if (winner != None):
+    if winner is not None:
         Console.output("Zwyciężył gracz %s" % winner)
     else:
         Console.output("Gra zakończyła się remisem")
@@ -47,23 +47,23 @@ def play_with_human():
 def play_via_network():
     Console.clear_view()
     board = Board()
-    if Console.input_yes_or_no("Czy ty zaczynasz grę"):
+    if Console.input_yes_or_no("Czy ty zaczynasz grę?"):
+        Console.clear_view()
         player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: "))
-        server = Server()
-        player2 = RemotePlayer(server)
+        player2 = RemotePlayer(Server())
         game = QuartoViaNetwork(board, player1, player2, 0)
     else:
+        Console.clear_view()
         player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: "))
-        print("Wprowadź dane hosta:")
-        host = input("IP hosta (lub localhost): ")
-        port = int(input("Port: "))
-        client = Client(host, port)
-        player2 = RemotePlayer(client)
+        Console.output("Wprowadź dane hosta:")
+        host = Console.input_text("IP / localhost: ")
+        port = Console.input_number_in_range("Port: ", 1000, 99999)
+        player2 = RemotePlayer(Client(host, port))
         game = QuartoViaNetwork(board, player1, player2, 1)
     winner = game.start()
-    if (winner == player1):
+    if winner == player1:
         Console.output("Gratulacje!!! Zwyciężyłeś")
-    elif (winner == player2):
+    elif winner == player2:
         Console.output("Niestety przegrałeś")
     else:
         Console.output("Gra zakończyła się remisem")
@@ -75,15 +75,16 @@ def play_with_bot(level):
     Console.clear_view()
     board = Board()
     player1 = LocalPlayer(Console.input_text("Wprowadź swoją nazwę gracza: "))
-    player2 = ArtificialPlayer(level, board)
+    player2 = ArtificialPlayer(name=f"BOT #{level}")
     game = QuartoGame(board, player1, player2)
     winner = game.start()
-    if (winner == player1):
+    if winner == player1:
         Console.output("Zwyciężyłeś")
-    elif (winner == player2):
+    elif winner == player2:
         Console.output("Zwyciężył bot")
     else:
         Console.output("Gra zakończyła się remisem")
+    input()
 
 
 def start_bot_battle(level):
@@ -92,25 +93,26 @@ def start_bot_battle(level):
     player1, player2 = None, None
 
     if level in [1, 2, 3]:
-        player1 = ArtificialPlayer(1, board)
+        player1 = ArtificialPlayer(name="BOT #1")
     elif level in [4, 5]:
-        player1 = ArtificialPlayer(2, board)
+        player1 = ArtificialPlayer(name="BOT #2")
     elif level == 6:
-        player1 = ArtificialPlayer(3, board)
+        player1 = ArtificialPlayer(name="BOT #3")
 
     if level == 1:
-        player2 = ArtificialPlayer(1, board)
+        player2 = ArtificialPlayer(name="BOT #1")
     elif level in [2, 4]:
-        player2 = ArtificialPlayer(2, board)
+        player2 = ArtificialPlayer(name="BOT #2")
     elif level in [3, 5, 6]:
-        player2 = ArtificialPlayer(3, board)
+        player2 = ArtificialPlayer(name="BOT #3")
 
     game = QuartoGame(board, player1, player2)
     winner = game.start()
-    if (winner != None):
+    if winner is not None:
         Console.output("Zwyciężył bot %s" % winner)
     else:
         Console.output("Gra zakończyła się remisem")
+    input()
 
 
 def show_rules():
