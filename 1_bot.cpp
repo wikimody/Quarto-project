@@ -51,6 +51,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    cout << wiersz << kolumna << pionki[pionek] << "\n";
+    cout << wiersz+1 << kolumna+1 << pionki[pionek] << "\n";
     return 0;
 }
