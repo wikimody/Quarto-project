@@ -7,7 +7,7 @@ plansza = pygame.image.load("Plansza.png")    # Obraz plaszy
 plansza = pygame.transform.scale(plansza, (720, 720))
 
 class Pawn:
-    def __init__(self,x,y,look):
+    def __init__(self,x,y,look,identy):
         self.cor_x = x
         self.cor_y = y
         self.state = False
@@ -18,18 +18,21 @@ class Pawn:
         else:
             self.image = pygame.transform.scale(look2, (80, 80))
             self.size = False
+        self.id = identy
 
-    def draw (self):
+    def draw (self):  #rysuje pionek
         x = self.cor_x
         y = self.cor_y
         window.blit(self.image,(x,y))
 
-    def locking(self):
+    def locking(self):  # nie morze się ruszać
         self.state = False
-    def unlocking(self):
+    def unlocking(self): #morze się ruszać
         self.state = True
+    def find_state(self): #sprawdza czy morze się ruszać
+        return self.state
 
-    def update_cords(self,x,y):
+    def update_cords(self,x,y): # rusza pionek
         if not self.state:
             return
         if self.size:
@@ -39,13 +42,13 @@ class Pawn:
             self.cor_x = x - 40
             self.cor_y = y - 40
 
-    def place (self):
+    def place (self):   # zwraca koedynaty zajmowane przez pionek 
         if self.size:
             return self.cor_x ,self.cor_x+120,self.cor_y,self.cor_y+120
         else:
             return self.cor_x ,self.cor_x+80,self.cor_y,self.cor_y+80
 
-    def snap (self):
+    def snap (self):     #przenosi pionak na miejsce w planszy
         if self.state:
             if self.size:
                 for x in range(4):
@@ -62,7 +65,7 @@ class Pawn:
                             self.locking()
 
 
-    def snap_prep (self):
+    def snap_prep (self):   #sprawdza czy pionek jest na miejscu w planszy 
         if self.state:
             if self.size:
                 for x in range(4):
@@ -77,44 +80,45 @@ class Pawn:
                             return x,y
         return
 
-    def stage_snap(self,stage,number):
-        if stage == -1:
-            if 1070 < self.cor_x < 1300 and 480 < self.cor_y < 700:
-                self.update_cords(1200, 590)
-                self.locking()
-                return number
-        return stage
+    def updating (self,table):  #dostosowanie pionków do tablicy
+        for a in range(4):
+            for b in range(4):
+                if table[a][b]== self.id:
+                    self.cor_x= a * 170 + 110
+                    self.cor_y= b * 170 + 110
+                    self.locking()
 
 
 
 
-def add_pawns():
+
+def add_pawns():    #metoda na dodanie wszystkich pionków 
     pawns = []
-    pawns.append(Pawn(770,10,'WKPM.png'))
-    pawns.append(Pawn(750,105,'WKPD.png'))
-    pawns.append(Pawn(770,240,'WKDM.png'))
-    pawns.append(Pawn(750, 340, 'WKDD.png'))
-    pawns.append(Pawn(770, 480, 'WOPM.png'))
-    pawns.append(Pawn(750, 580, 'WOPD.png'))
-    pawns.append(Pawn(950, 10, 'WODM.png'))
-    pawns.append(Pawn(930, 105, 'WODD.png'))
-    pawns.append(Pawn(950, 240, 'BKPM.png'))
-    pawns.append(Pawn(930, 340, 'BKPD.png'))
-    pawns.append(Pawn(950, 480, 'BKDM.png'))
-    pawns.append(Pawn(930, 580, 'BKDD.png'))
-    pawns.append(Pawn(1120, 10, 'BOPM.png'))
-    pawns.append(Pawn(1100, 105, 'BOPD.png'))
-    pawns.append(Pawn(1120, 240, 'BODM.png'))
-    pawns.append(Pawn(1100, 340, 'BODD.png'))
+    pawns.append(Pawn(770,10,'WKPM.png',0))
+    pawns.append(Pawn(750,105,'WKPD.png',1))
+    pawns.append(Pawn(770,240,'WKDM.png',2))
+    pawns.append(Pawn(750, 340, 'WKDD.png',3))
+    pawns.append(Pawn(770, 480, 'WOPM.png',4))
+    pawns.append(Pawn(750, 580, 'WOPD.png',5))
+    pawns.append(Pawn(950, 10, 'WODM.png',6))
+    pawns.append(Pawn(930, 105, 'WODD.png',7))
+    pawns.append(Pawn(950, 240, 'BKPM.png',8))
+    pawns.append(Pawn(930, 340, 'BKPD.png',9))
+    pawns.append(Pawn(950, 480, 'BKDM.png',10))
+    pawns.append(Pawn(930, 580, 'BKDD.png',11))
+    pawns.append(Pawn(1120, 10, 'BOPM.png',12))
+    pawns.append(Pawn(1100, 105, 'BOPD.png',13))
+    pawns.append(Pawn(1120, 240, 'BODM.png',14))
+    pawns.append(Pawn(1100, 340, 'BODD.png',15))
     return pawns
 
-pawns = add_pawns()
+pawns = add_pawns() #tworzenie najwarzniejszej listy w programie
 
-def activate_pawn(number):
+def activate_pawn(number): #metoda na przygotowanie pionka do ruchu
     pawns[number].unlocking()
     pawns[number].update_cords(1180,590)
 
-def moving_pawns(event,presed,wchich,table):
+def moving_pawns(event,presed,wchich,table): # metoda na ruszanie pionków
     mouse = pygame.mouse.get_pos()
     # czy myszka jest wciśnięta
     if event.type == pygame.MOUSEBUTTONDOWN:
@@ -141,24 +145,18 @@ def moving_pawns(event,presed,wchich,table):
 
     return presed,table
 
-def moving_choice(event,presed,wchich,stage):
+def moving_choice(event,wchich,stage):  # metoda na wybieranie pionków
     mouse = pygame.mouse.get_pos()
-    # czy myszka jest wciśnięta
-    if event.type == pygame.MOUSEBUTTONDOWN:
-        presed = True
-    if event.type == pygame.MOUSEBUTTONUP:
-        presed = False
-
-    if presed and event.type == pygame.MOUSEMOTION:
-        a, b, c, d = pawns[wchich].place()
-        if a <= mouse[0] <= b and c <= mouse[1] <= d:
-            pawns[wchich].update_cords(mouse[0], mouse[1])
 
     if event.type == pygame.KEYDOWN:
-        stage = pawns[wchich].stage_snap(stage,wchich)
-    return presed,stage
+        if pawns[wchich].find_state():
+            if stage==-1:
+                a,b,c,d = pawns[wchich].place()
+                if a <= mouse[0] <= b and c <= mouse[1] <= d:
+                    stage =wchich 
+    return stage
 
-def choice (table):
+def choice (table): #plansza na wybieranie pionka przeciwnika
     stage = -1
     for n in pawns:
         n.unlocking()
@@ -168,7 +166,6 @@ def choice (table):
                 pawns[n].locking()
 
     run = True
-    presed = False
 
     while run:
         pygame.time.Clock().tick(100)  # ograniczenie pętli do 60 powturzeń na secundę
@@ -178,7 +175,7 @@ def choice (table):
                 run = False
 
             for n in range(16):
-                presed, stage = moving_choice(event, presed, n,stage)
+                stage = moving_choice(event, n ,stage)
 
         window.fill((1, 1, 1))
         window.blit(plansza, (0, 0))
@@ -188,22 +185,25 @@ def choice (table):
             n.draw()
 
         pygame.display.update()
-        for n in range(16):
-            if n == stage:
-                run = False
+        if 0<=stage<=15:
+            run = False
 
         pass
 
-    WindowOne(stage,table)
-    return table,
+    for n in pawns:
+        n.locking()
+    WindowOne(stage,table)# to delete in final version
+    return table,stage
 
 
 
 
-def ending ():
+def ending (table):     # Plansza na wyświetlanie końcowej planszy
+    for n in pawns:
+        n.updating(table)
     run = True
     while run:
-        pygame.time.Clock().tick(30) #ograniczenie pętli do 60 powturzeń na secundę
+        pygame.time.Clock().tick(60) #ograniczenie pętli do 60 powturzeń na secundę
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -216,13 +216,15 @@ def ending ():
         pygame.display.update()
         pass
 
-def WindowOne (wchich,table): #pierwsze menu
+def Move (wchich, table): # Plansza na rozgrywanie twojego ruchu 
     run =True
     activate_pawn(wchich)
     presed = False
+    for n in pawns:
+        n.updating(table)
 
     while run:
-        pygame.time.Clock().tick(100) #ograniczenie pętli do 60 powturzeń na secundę
+        pygame.time.Clock().tick(100) #ograniczenie pętli do 100 powturzeń na secundę
 
 
         for event in pygame.event.get():
@@ -245,13 +247,15 @@ def WindowOne (wchich,table): #pierwsze menu
                 run=False
 
         pass
-    choice(table)
+    choice(table)# to delete in final version
     return table
 
-table = [[-1]*4 for _ in range(4)]
+
+table = [[-1]*4 for _ in range(4)]# to delete in final version
 
 
-WindowOne(0,table)
+table=WindowOne(0,table)# to delete in final version
 
-ending()
+ending(table)# to delete in final version
+
 
