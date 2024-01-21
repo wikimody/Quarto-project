@@ -9,7 +9,7 @@ class QuartoGame:
         self._turn = turn
         self._avaliable_pieces = [Piece(val) for val in range(16)]
 
-    def switch_turn(self):
+    def switch_player(self):
         self._turn = (self._turn + 1) % 2
 
     def current_player(self):
@@ -65,7 +65,7 @@ class QuartoGame:
         self.display_to_choose_piece()
         chosen_piece = self.get_piece(
             self.current_player().choose_piece(self.avaliable_pieces_values()))  # choose first piece for opponent
-        self.switch_turn()
+        self.switch_player()
 
         # Game is going on while there are pieces to choose from
         while len(self._avaliable_pieces):
@@ -83,7 +83,7 @@ class QuartoGame:
             self.display_to_choose_piece()  # current player chooses piece for the opponent
             chosen_piece = self.get_piece(self.current_player().choose_piece(self.avaliable_pieces_values()))
 
-            self.switch_turn()
+            self.switch_player()
 
         Console.clear_view()
         Console.output(self._board)

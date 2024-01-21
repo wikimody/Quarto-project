@@ -25,6 +25,6 @@ Agata Rajczakowska 345398 \
 Mikołaj Dygoń 346656 \
 Tatiana Mikshta 344451 \
 Wiktor Modrzewski 346200 \
-Yurii Pryimak ? \
+Yurii Pryimak 343898 \
 Daniel Boguszewski 315942 \
 Krzysztof Piekarczyk 324527
