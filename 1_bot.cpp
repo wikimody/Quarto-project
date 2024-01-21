@@ -41,10 +41,15 @@ int main(int argc, char *argv[])
         kolumna = rand() % 4;
     } while(plansza[wiersz][kolumna] != 'p');
 
-    do{
-        pionek = rand()%16;
-    } while(spr_wykorzystania(postawione,pionek, pionki) == 0);
-
+    pionek = 16;
+    for(int i = 0; i < 16; i++)
+    {
+        if(spr_wykorzystania(postawione, i, pionki) == 1)
+        {
+            pionek = i;
+            break;
+        }
+    }
 
     cout << wiersz << kolumna << pionki[pionek] << "\n";
     return 0;
