@@ -403,7 +403,6 @@ int main(int argc, char *argv[])
     }
     //          *****           WYPIS WSPOLRZEDNYCH         *****
     else {
-        cout<<win_x+1<<win_y+1;
         //wstawienie pionka do planszy zeby wylosowac dobry pionek dla oponenta
         plansza[win_x][win_y] = postawione[16];
     }
@@ -432,8 +431,8 @@ int main(int argc, char *argv[])
     char pionki_char[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
     if(pionek != 16)
-        cout << pionki_char[pionek] << endl;
-    else cout << pionek << endl;
+        cout<<win_x+1<<win_y+1<< pionki_char[pionek] << endl;
+    else cout<<win_x+1<<win_y+1<< pionek << endl;
 
     return 0;
 }
