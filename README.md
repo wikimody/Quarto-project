@@ -2,10 +2,6 @@
 
 Projekt zespołowy gry wykonany na potrzeby zajęć *podstawowego warsztatu informatyka*.
 
-### Projekt wciąż jest nieukończony
-
-Struktura, logika i wymagania projektu mogą ulec zmianie.
-
 ## Zasady gry
 
 Obowiązują wszystkie podstawowe zasady gry oprócz potrzeby wołania *Quarto*
