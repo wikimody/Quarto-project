@@ -11,9 +11,9 @@ class Player(ABC):
         pass
 
     @abstractmethod
-    def place_piece(self, piece):
+    def where_place_piece(self, piece):
         pass
-    
+
     @abstractmethod
     def __str__(self):
         pass

@@ -1,7 +1,8 @@
 import socket
+import urllib.request
 
 from .network_base import NetworkBase
-import urllib.request
+
 
 class Server(NetworkBase):
     def __init__(self, host="0.0.0.0", port=12345):

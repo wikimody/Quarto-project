@@ -38,7 +38,6 @@ class Piece:
         else:
             self._symbolic += "\u25C7"
 
-
     def is_idle(self):
         return self._bin_value == None
 
