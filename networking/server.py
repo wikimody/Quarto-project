@@ -1,6 +1,7 @@
 import socket
 import urllib.request
 
+from interactions.console import Console
 from .network_base import NetworkBase
 
 
@@ -16,11 +17,11 @@ class Server(NetworkBase):
     def start_server(self):
         self.server_socket.bind(self.server_address)
         self.server_socket.listen(1)
-        print("Dane do nawiązania połączenia z serwerem:")
-        print(f'IP: {self.external_ip} Port: {self.server_address[1]}')
-        print('Oczekiwanie połączenia...')
+        Console.output("Dane tego hosta:")
+        Console.output(f'IP: {self.external_ip} Port: {self.server_address[1]}')
+        Console.output('Oczekiwanie na połączenie...')
         self.client_socket, self.client_address = self.server_socket.accept()
-        print(f'Połączono z klientem: {self.client_address}')
+        Console.output(f'Połączono z klientem: {self.client_address}')
 
     def receive_message(self):
         data = self.client_socket.recv(1024)

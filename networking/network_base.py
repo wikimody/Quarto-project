@@ -9,3 +9,7 @@ class NetworkBase(ABC):
     @abstractmethod
     def receive_message(self):
         pass
+
+    @abstractmethod
+    def close(self):
+        pass
