@@ -42,7 +42,7 @@ class Pawn:
             self.cor_x = x - 40
             self.cor_y = y - 40
 
-    def place (self):   # zwraca koedynaty zajmowane przez pionek 
+    def place (self):   # zwraca koedynaty zajmowane przez pionek
         if self.size:
             return self.cor_x ,self.cor_x+120,self.cor_y,self.cor_y+120
         else:
@@ -65,7 +65,7 @@ class Pawn:
                             self.locking()
 
 
-    def snap_prep (self):   #sprawdza czy pionek jest na miejscu w planszy 
+    def snap_prep (self):   #sprawdza czy pionek jest na miejscu w planszy
         if self.state:
             if self.size:
                 for x in range(4):
@@ -84,15 +84,19 @@ class Pawn:
         for a in range(4):
             for b in range(4):
                 if table[a][b]== self.id:
-                    self.cor_x= a * 170 + 110
-                    self.cor_y= b * 170 + 110
+                    if self.size:
+                        self.cor_x = a * 170 + 50
+                        self.cor_y = b * 170 + 50
+                    else:
+                        self.cor_x = a * 170 + 70
+                        self.cor_y = b * 170 + 70
                     self.locking()
 
 
 
 
 
-def add_pawns():    #metoda na dodanie wszystkich pionków 
+def add_pawns():    #metoda na dodanie wszystkich pionków
     pawns = []
     pawns.append(Pawn(770,10,'WKPM.png',0))
     pawns.append(Pawn(750,105,'WKPD.png',1))
@@ -153,7 +157,7 @@ def moving_choice(event,wchich,stage):  # metoda na wybieranie pionków
             if stage==-1:
                 a,b,c,d = pawns[wchich].place()
                 if a <= mouse[0] <= b and c <= mouse[1] <= d:
-                    stage =wchich 
+                    stage =wchich
     return stage
 
 def choice (table): #plansza na wybieranie pionka przeciwnika
@@ -192,7 +196,7 @@ def choice (table): #plansza na wybieranie pionka przeciwnika
 
     for n in pawns:
         n.locking()
-    WindowOne(stage,table)# to delete in final version
+    Move(stage,table)# to delete in final version
     return table,stage
 
 
@@ -216,7 +220,7 @@ def ending (table):     # Plansza na wyświetlanie końcowej planszy
         pygame.display.update()
         pass
 
-def Move (wchich, table): # Plansza na rozgrywanie twojego ruchu 
+def Move (wchich, table): # Plansza na rozgrywanie twojego ruchu
     run =True
     activate_pawn(wchich)
     presed = False
@@ -247,15 +251,13 @@ def Move (wchich, table): # Plansza na rozgrywanie twojego ruchu
                 run=False
 
         pass
-    choice(table)# to delete in final version
-    return table
+    table,stage =choice(table)# to get next move
+    return table , stage
 
 
 table = [[-1]*4 for _ in range(4)]# to delete in final version
 
 
-table=WindowOne(0,table)# to delete in final version
+table=Move(0,table)# to delete in final version
 
 ending(table)# to delete in final version
-
-
