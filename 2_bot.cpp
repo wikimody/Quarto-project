@@ -434,5 +434,7 @@ int main(int argc, char *argv[])
     if(pionek != 16)
         cout << pionki_char[pionek] << endl;
     else cout << pionek << endl;
+
+    return 0;
 }
 
