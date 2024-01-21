@@ -16,6 +16,7 @@ Uruchomienie gry polega na wywołaniu skryptu *main.py* znajdującego się w gł
 ## Wymagania systemowe
 - Gra w założeniu jest dostosowana do użytku w systmie Linux.
 - Do uruchomienia gry potrzebny jest interpeter języka Python i środowisko C++.
+- Do urzycia części graficznych potrzebne jest pobranie biblioteki pygame dla pythona
 
 ## Współautorzy
 Klara Nowaczyk 346456 \
@@ -26,3 +27,4 @@ Wiktor Modrzewski 346200 \
 Yurii Pryimak ? \
 Daniel Boguszewski 315942 \
 Krzysztof Piekarczyk 324527
+
