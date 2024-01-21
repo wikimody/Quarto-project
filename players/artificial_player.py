@@ -3,9 +3,9 @@ from .player import Player
 
 # Zaimplementowałem od razu najgłupszego możliwego bota
 class ArtificialPlayer(Player):
-    def __init__(self, name):
+    def __init__(self, name, path):
         self._name = name
-        # self._path = path
+        self._path = path
 
     def choose_piece(self, pieces_values):  # pieces - lista wartości pionów (decymalna)
         # W tym miejscu bot wybiera, którą figurę przekazać drugiemu graczowi

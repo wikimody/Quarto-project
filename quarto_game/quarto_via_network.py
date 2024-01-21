@@ -18,7 +18,7 @@ class QuartoViaNetwork(QuartoGame):
             remote.send_message(str(chosen_piece))
             Console.clear_view()
         else:
-            self.switch_turn()
+            self.switch_player()
             Console.output("Czekamy na ruch twojego przeciwnika...")
             Console.output("NIC NIE WPISUJ!!!")
             piece_to_place = int(remote.receive_message())
