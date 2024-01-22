@@ -1,27 +1,28 @@
 import subprocess
 from quarto_game.board import Board
 
-
+# tworzymy tablicę argumentów i wykonujemy, zwracamy standardowe wyjście, zwrócone przez program
 def execute_cpp(program_path : str, program_args : str) -> str:
     run_args = [program_path] + program_args.split(sep = " ")
     result = subprocess.run(run_args, capture_output=True, encoding='utf-8')
     return result.stdout
 
 
+# przeglądamy tablicę i tworzymy napis, który odpowiada wyglądowi tablicy, a na końcu dopisujemy wybrany pionek
 def generate_args(board : Board, piece_choice : int) -> str:
     result = ""
     for i in range(4):
         for j in range(4):
-            if board[i][j].decimal() == -1: # place is empty
+            if board[i][j].decimal() == -1: # pole jest puste
                 result += 'p'
             else:
                 result += hex(board[i][j].decimal)[2::]
     result += hex(piece_choice)[2::]
     return result
 
-
+# napis dzielimy na pojedyncze znaki i wybieramy nas interesujące
 def receive_args(receive : str) -> list:
-    tmp = receive.split(sep = '')
+    tmp = list(receive)
     return [int(tmp[0]), int(tmp[1]), int(tmp[2], 16)]
 
 
