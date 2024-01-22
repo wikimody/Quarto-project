@@ -53,13 +53,13 @@ class QuartoGame:
     def display_to_place_piece(self, piece):
         Console.clear_view()
         Console.output(self._board)
-        Console.output(f"{str(self.current_player()).upper()} stawia tego pionka: \n{piece}")
+        Console.output(f"{str(self.current_player())} stawia pionek \u2116{piece.decimal()}: \n{piece}")
 
     def display_to_choose_piece(self):
         Console.clear_view()
         Console.output(self._board)
         Console.output(
-            f"{str(self.current_player()).upper()} wybiera dla przeciwnika jednego z tych pionków:\n{self.format_avaliable_pieces()}")
+            f"{str(self.current_player())} wybiera dla przeciwnika jednego z pozostałych pionków:\n{self.format_avaliable_pieces()}")
 
     def start(self):
         self.display_to_choose_piece()
@@ -69,6 +69,7 @@ class QuartoGame:
 
         # Game is going on while there are pieces to choose from
         while len(self._avaliable_pieces):
+            Console.output(f"Wybrano pionek \u2116{chosen_piece.decimal()}:\n{chosen_piece}")
             self.display_to_place_piece(chosen_piece)
             row, col = self.current_player().where_place_piece(chosen_piece,
                                                                self._board)  # this should return correct row and col
@@ -81,7 +82,8 @@ class QuartoGame:
                 return self.current_player()
 
             self.display_to_choose_piece()  # current player chooses piece for the opponent
-            chosen_piece = self.get_piece(self.current_player().choose_piece(self.avaliable_pieces_values()))
+            chosen_piece = self.get_piece(self.current_player().choose_piece(
+                self.avaliable_pieces_values()))  # zauważyłem że bot2 tutaj czasem zwraca None
 
             self.switch_player()
 

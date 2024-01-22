@@ -18,8 +18,9 @@ https://www.ultraboardgames.com/quarto/game-rules.php
 
 - Gra w założeniu jest przeznaczona do użytku w systmie Linux.
 - Do uruchomienia gry potrzebny jest interpeter języka Python (Wesja: 3.10.12 jest działająca).
-- Gra posiada już skompilowane boty. 
-Jeśli użytkownik sam chce je skompilować potrzebuje do tego kompilatora języka C++ (autor tych słów używał g++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0).
+- Gra posiada już skompilowane boty.
+  Jeśli użytkownik sam chce je skompilować potrzebuje do tego kompilatora języka C++ (autor tych słów używał g++ (Ubuntu
+  11.4.0-1ubuntu1~22.04) 11.4.0).
 
 Instalacja pythona wg: https://www.python.org/ \
 Instalacja kompilatora CPP: wykonać w terminalu polecenie:
@@ -49,7 +50,8 @@ Program umożliwia 4 tryby gry:
 4. Starcie botów
 
 Niezależnie od trybu gry, program za każdym razem wyświetla stan planszy w konsoli. W zależoności
-od rodzaju ruchu (wybieranie pionka, położenie pionka) gracz na konsoli otrzymuje odpowiednie informacje (dostępne pionki, stan planszy).
+od rodzaju ruchu (wybieranie pionka, położenie pionka) gracz na konsoli otrzymuje odpowiednie informacje (dostępne
+pionki, stan planszy).
 
 W trybie 3. oraz 4. użytkownik ma możliwość wyboru między 3 botami.
 
