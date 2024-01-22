@@ -189,13 +189,12 @@ int main(int argc, char *argv[])
 	srand(time(NULL));
     int wierszR, kolumnaR, pionekR, los;
     los = rand()%2;
-    cout<<"losowanie1"<<endl;
+
     if(los)
 	{
-		cout<<"weszlo"<<endl;
+		
   	  do
  	   {
- 	   	cout<<"losowanie2"<<endl;
  	       wierszR = rand() % 4;
   	      	kolumnaR = rand() % 4;
   	  } while(plansza[wierszR][kolumnaR] != 16);
@@ -205,7 +204,7 @@ int main(int argc, char *argv[])
   	  {
   	      if(spr_wykorzystania(postawione, i) == 1)
  	       {
- 	       	cout<<"pionek"<<endl;
+ 	  
  	           pionekR = i;
  	           break;
  	       }
