@@ -1,4 +1,4 @@
-//2. bot
+//3.bot
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
@@ -146,11 +146,11 @@ int main(int argc, char *argv[])
 {
     //sprawdzanie poprawnosci wejscia
     if (argc != 2){
-        fprintf (stderr, "Zla liczba argumentow\n");
+        fprintf (stderr, "Zla liczba argumrntow\n");
         return 1;
     }
     if (strlen (argv[1]) != 17){
-        fprintf (stderr, "Podaj sam opis planszy czyli 16 znakow\n");
+        fprintf (stderr, "Podaj sam opis planszy czyli 17 znakow\n");
         return 2;
     }
 
@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
         pionki[i] = i;
     }
 
-    // "Wizualizujemy" plansze w tablicy: plansza. Zapisujemy, ktĂłre figury zostaly juz wykorzystane.
+    // "Wizualizujemy" plansze w tablicy: plansza. Zapisujemy, które figury zostaly juz wykorzystane.
     for(int i = 0; i < 4; i++)
     {
         for(int j = 0; j < 4; j++)
@@ -185,6 +185,7 @@ int main(int argc, char *argv[])
     int wygrana_x_w = -1, wygrana_y_w = -1,  wygrana_x_k = -1, wygrana_y_k = -1, wygrana_x_p_lg = -1, wygrana_y_p_lg = -1, wygrana_x_p_ld = -1, wygrana_y_p_ld = -1;
     int win_x = -1, win_y = -1;
     bool czy_wygrana = 0;
+
 	//R - random, wersja dla bota 50/50
 	srand(time(NULL));
     int wierszR, kolumnaR, pionekR, los;
@@ -213,7 +214,8 @@ int main(int argc, char *argv[])
   	  cout << wierszR+1 << kolumnaR+1 << pionki[pionekR] << "\n";
     	return 0;
 	} 
-	
+
+
     for(int i = 0; i < 4; i++)
     {
         ilosc_pionkow_w = 0;
@@ -428,7 +430,7 @@ int main(int argc, char *argv[])
         }
     }
     if (!czy_wygrana){
-        cout<< "PELNA PLANSZA UGH";
+        //cout<< "PELNA PLANSZA UGH";
         return 2137;
     }
     //          *****           WYPIS WSPOLRZEDNYCH         *****
@@ -437,16 +439,18 @@ int main(int argc, char *argv[])
         plansza[win_x][win_y] = postawione[16];
     }
 
-    int pionek = 16;
+    int pionek = 16, temp;
     for(int i = 0; i < 16; i++)//wybieranie pionka dla przeciwnika
     {
         if(spr_wykorzystania(postawione, pionki[i]) == 1)
         {
+            temp = postawione[16];
             postawione[16] = pionki[i];
             if (znajdz_pole_przeciwnika (plansza, postawione) == 0){
                 pionek = pionki[i];
                 break;
             }
+            postawione[16] = temp;
         }
     }
     // jesli pionek == 16 to wybieramy pierwszego dostepnego i przegrywamy
