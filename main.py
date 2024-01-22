@@ -9,7 +9,7 @@ from quarto_game.menu import Menu
 from quarto_game.quarto_game import QuartoGame
 from quarto_game.quarto_via_network import QuartoViaNetwork
 
-BOTS_NUMBER = 2  # const
+BOTS_NUMBER = 3  # const
 
 
 def play_with_human():
