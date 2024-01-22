@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
         return 1;
     }
     if (strlen (argv[1]) != 17){
-        fprintf (stderr, "Podaj sam opis planszy czyli 16 znakow\n");
+        fprintf (stderr, "Podaj sam opis planszy czyli 17 znakow\n");
         return 2;
     }
 
@@ -166,14 +166,14 @@ int main(int argc, char *argv[])
         for(int j = 0; j < 4; j++)
         {
             plansza[i][j] = zamiana_pionkow(argv[1][licznik]);
-            //cout << plansza[i][j] << " ";
+            cout << plansza[i][j] << " ";
             if(argv[1][licznik] != 'p')
                 postawione[licznik] = zamiana_pionkow(argv[1][licznik]);
             licznik++;
 
             przegrana[i][j] = 0;
         }
-        //cout << endl;
+        cout << endl;
     }
     postawione[licznik] = zamiana_pionkow(argv[1][licznik]); // pionek ktory dostalismy
 
@@ -407,16 +407,18 @@ int main(int argc, char *argv[])
         plansza[win_x][win_y] = postawione[16];
     }
 
-    int pionek = 16;
+    int pionek = 16, temp;
     for(int i = 0; i < 16; i++)//wybieranie pionka dla przeciwnika
     {
         if(spr_wykorzystania(postawione, pionki[i]) == 1)
         {
+            temp = postawione[16];
             postawione[16] = pionki[i];
             if (znajdz_pole_przeciwnika (plansza, postawione) == 0){
                 pionek = pionki[i];
                 break;
             }
+            postawione[16] = temp;
         }
     }
     // jesli pionek == 16 to wybieramy pierwszego dostepnego i przegrywamy
