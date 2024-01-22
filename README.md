@@ -1,6 +1,6 @@
 # Projekt Quarto (PWI)
 
-Projekt zespołowy gry wykonany na potrzeby zajęć *podstawowego warsztatu informatyka*.
+Projekt zespołowy gry wykonany na potrzeby zajęć *Podstawowego Warsztatu Informatyka*.
 
 ## Zasady gry
 
@@ -15,8 +15,9 @@ Uruchomienie gry polega na wywołaniu skryptu *main.py* znajdującego się w gł
 
 ## Wymagania systemowe
 
-- Gra w założeniu jest dostosowana do użytku w systmie Linux.
-- Do uruchomienia gry potrzebny jest interpeter języka Python i środowisko C++.
+- Gra w założeniu jest przeznaczona do użytku w systmie Linux.
+- Do uruchomienia gry potrzebny jest interpeter języka Python.
+- Gra posiada już skompilowane boty. Jeśli użytkownik sam chce je skompilować potrzebuje do tego kompilatora języka C++.
 
 ## Współautorzy
 
