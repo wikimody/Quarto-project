@@ -14,7 +14,7 @@ class ArtificialPlayer(Player):
 
     def choose_piece(self, pieces : list(int)) -> int: 
         if self._piece_number == -1:        # jeśli bot zaczyna to musi wylosować pierwszego piona
-            return time.time() % 16 # XD - ale jest to jakaś losowość (tak wiem, że jest random.choice)
+            return pieces[time.time() % 16] # XD - ale jest to jakaś losowość (tak wiem, że jest random.choice)
         return self._piece_number 
 
     def where_place_piece(self, piece : Piece, board : Board) -> list(int, int): 
