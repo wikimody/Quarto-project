@@ -10,17 +10,11 @@ def execute_cpp(program_path : str, program_args : str) -> str:
 
 # przeglądamy tablicę i tworzymy napis, który odpowiada wyglądowi tablicy, a na końcu dopisujemy wybrany pionek
 def generate_args(board : Board, piece_choice : int) -> str:
-    result = ""
-    for i in range(4):
-        for j in range(4):
-            if board[i][j].decimal() == -1: # pole jest puste
-                result += 'p'
-            else:
-                result += hex(board[i][j].decimal)[2::]
+    result = board.format()
     result += hex(piece_choice)[2::]
     return result
 
-# napis dzielimy na pojedyncze znaki i wybieramy nas interesujące
+# napis dzielimy na pojedyncze znaki i wybieramy nas interesują
 def receive_args(receive : str) -> list:
     tmp = list(receive)
     return [int(tmp[0]), int(tmp[1]), int(tmp[2], 16)]

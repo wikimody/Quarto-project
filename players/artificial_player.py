@@ -12,12 +12,12 @@ class ArtificialPlayer(Player):
         self._path = path
         self._piece_number = -1
 
-    def choose_piece(self, pieces : list(int)) -> int: 
+    def choose_piece(self, pieces : list) -> int: 
         if self._piece_number == -1:        # jeśli bot zaczyna to musi wylosować pierwszego piona
-            return pieces[time.time() % 16] # XD - ale jest to jakaś losowość (tak wiem, że jest random.choice)
+            return pieces[int(time.time() % 16)] # XD - ale jest to jakaś losowość (tak wiem, że jest random.choice)
         return self._piece_number 
 
-    def where_place_piece(self, piece : Piece, board : Board) -> list(int, int): 
+    def where_place_piece(self, piece : Piece, board : Board) -> list:
         args = cppA.generate_args(board, piece.decimal()) # generujemy argument dla pliku cpp
         result = cppA.execute_cpp(self._path,  args)  # wykonujemy plik
         result_list = cppA.receive_args(result) # wyciągamy wyniki odpowiednio przetworzone
