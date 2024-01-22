@@ -21,7 +21,7 @@ https://www.ultraboardgames.com/quarto/game-rules.php
 - Gra posiada już skompilowane boty. 
 Jeśli użytkownik sam chce je skompilować potrzebuje do tego kompilatora języka C++ (autor tych słów używał g++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0).
 
-Instalacja pythona wg: https://www.python.org/
+Instalacja pythona wg: https://www.python.org/ \
 Instalacja kompilatora CPP: wykonać w terminalu polecenie:
 
 > sudo apt update && sudo apt install build-essential
@@ -35,7 +35,7 @@ Następnie skompilowany plik należy umieścić w folderze cpp_bots/bin/.
 ## Uruchamianie gry
 
 Uruchomienie gry polega na wywołaniu skryptu *main.py* znajdującego się w głównym katalogu gry.
-Dokonujemy tego w klasyczny sposób (powinniśmy znajdować się w katalogu z main.py):
+Dokonujemy tego w klasyczny sposób (powinniśmy znajdować się w terminalu w katalogu z main.py):
 
 > python main.py
 
