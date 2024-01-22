@@ -28,7 +28,7 @@ Instalacja kompilatora CPP: wykonać w terminalu polecenie:
 
 Aby odpowiednio skompilować bota należy wykonać odpowiednią komendę:
 
-> g++ -o {nazwa_skompilowanego pliku} {ścieżka_do_pliku_cpp}
+> g++ -o {nazwa_skompilowanego_pliku} {ścieżka_do_pliku_cpp}
 
 Następnie skompilowany plik należy umieścić w folderze cpp_bots/bin/.
 
@@ -52,6 +52,10 @@ Niezależnie od trybu gry, program za każdym razem wyświetla stan planszy w ko
 od rodzaju ruchu (wybieranie pionka, położenie pionka) gracz na konsoli otrzymuje odpowiednie informacje (dostępne pionki, stan planszy).
 
 W trybie 3. oraz 4. użytkownik ma możliwość wyboru między 3 botami.
+
+## TODO (co się nie udało?)
+
+Do zrobienia pozostała część graficzna gry, a mianowicie skomunikowanie warstwy graficznej z programem.
 
 ## Współautorzy
 
