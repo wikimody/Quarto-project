@@ -1,14 +1,9 @@
 import subprocess
-import platform
 from quarto_game.board import Board
 
 
 def execute_cpp(program_path : str, program_args : str) -> str:
     run_args = [program_path] + program_args.split(sep = " ")
-
-    if platform.system() == 'Linux':
-        run_args = ['wine'] + run_args
-    
     result = subprocess.run(run_args, capture_output=True, encoding='utf-8')
     return result.stdout
 
