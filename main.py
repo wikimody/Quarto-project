@@ -5,43 +5,25 @@ from players.artificial_player import ArtificialPlayer
 from players.local_player import LocalPlayer
 from players.remote_player import RemotePlayer
 from quarto_game.board import Board
+from quarto_game.menu import Menu
 from quarto_game.quarto_game import QuartoGame
 from quarto_game.quarto_via_network import QuartoViaNetwork
 
-
-def start_menu(page=1):
-    if page == 1:
-        Console.output("Witaj w grze Quarto!")  # Wyświetlanie powitalnego komunikatu
-        Console.output("1. Graj z człowiekiem")
-        Console.output("2. Graj z botem 1")
-        Console.output("3. Graj z botem 2")
-        Console.output("4. Graj z botem 3")
-        Console.output("5. Starcie botów")
-        Console.output("6. Zasady gry")
-        Console.output("7. Wyjdź z gry")
-        Console.output("8. Graj z człowiekiem ONLINE")
-    else:
-        Console.output("Wybierz poziomy zaawansowania botów")
-        Console.output("1. P1 vs P1")
-        Console.output("2. P1 vs P2")
-        Console.output("3. P1 vs P3")
-        Console.output("4. P2 vs P2")
-        Console.output("5. P2 vs P3")
-        Console.output("6. P3 vs P3")
-        Console.output("7. Wróć")
+BOTS_NUMBER = 3  # const
 
 
 def play_with_human():
     Console.clear_view()
     board = Board()
-    player1 = LocalPlayer(Console.input_text("Wprowadź nazwę pierwszego gracza: "))
-    player2 = LocalPlayer(Console.input_text("Wprowadź nazwę drugiego gracza: "))
+    player1 = LocalPlayer(Console.input_text("Wprowadź nazwę pierwszego gracza: ").upper())
+    player2 = LocalPlayer(Console.input_text("Wprowadź nazwę drugiego gracza: ").upper())
     game = QuartoGame(board, player1, player2)
     winner = game.start()
     if winner is not None:
         Console.output("Zwyciężył gracz %s" % winner)
     else:
         Console.output("Gra zakończyła się remisem")
+    input("ENTER żeby kontynuować...")
 
 
 def play_via_network():
@@ -49,14 +31,14 @@ def play_via_network():
     board = Board()
     if Console.input_yes_or_no("Czy ty zaczynasz grę?"):
         Console.clear_view()
-        player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: "))
+        player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: ").upper())
         player2 = RemotePlayer(Server())
         game = QuartoViaNetwork(board, player1, player2, 0)
     else:
         Console.clear_view()
-        player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: "))
+        player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: ").upper())
         Console.output("Wprowadź dane hosta:")
-        host = Console.input_text("IP / localhost: ")
+        host = Console.input_text("IP / localhost: ").lower()
         port = Console.input_number_in_range("Port: ", 1000, 99999)
         player2 = RemotePlayer(Client(host, port))
         game = QuartoViaNetwork(board, player1, player2, 1)
@@ -68,14 +50,14 @@ def play_via_network():
     else:
         Console.output("Gra zakończyła się remisem")
     player2._connected_device.close()
-    input()
+    input("ENTER żeby kontynuować...")
 
 
-def play_with_bot(level):
+def play_with_bot(bot_name):
     Console.clear_view()
     board = Board()
-    player1 = LocalPlayer(Console.input_text("Wprowadź swoją nazwę gracza: "))
-    player2 = ArtificialPlayer(name=f"BOT #{level}")
+    player1 = LocalPlayer(Console.input_text("Wprowadź swoją nazwę gracza: ").upper())
+    player2 = ArtificialPlayer(name=f"{bot_name}".upper(), path=f"cpp_bots/bin/{bot_name}")
     game = QuartoGame(board, player1, player2)
     winner = game.start()
     if winner == player1:
@@ -84,66 +66,73 @@ def play_with_bot(level):
         Console.output("Zwyciężył bot")
     else:
         Console.output("Gra zakończyła się remisem")
-    input()
+    input("ENTER żeby kontynuować...")
 
 
-def start_bot_battle(level):
+def start_bot_battle(bot1_name, bot2_name):
     Console.clear_view()
     board = Board()
-    player1, player2 = None, None
-
-    if level in [1, 2, 3]:
-        player1 = ArtificialPlayer(name="BOT #1")
-    elif level in [4, 5]:
-        player1 = ArtificialPlayer(name="BOT #2")
-    elif level == 6:
-        player1 = ArtificialPlayer(name="BOT #3")
-
-    if level == 1:
-        player2 = ArtificialPlayer(name="BOT #1")
-    elif level in [2, 4]:
-        player2 = ArtificialPlayer(name="BOT #2")
-    elif level in [3, 5, 6]:
-        player2 = ArtificialPlayer(name="BOT #3")
+    if bot1_name != bot2_name:
+        player1 = ArtificialPlayer(name=f"{bot1_name}".upper(), path=f"cpp_bots/bin/{bot1_name}")
+        player2 = ArtificialPlayer(name=f"{bot2_name}".upper(), path=f"cpp_bots/bin/{bot2_name}")
+    else:
+        player1 = ArtificialPlayer(name=f"{bot1_name} #1".upper(), path=f"cpp_bots/bin/{bot1_name}")
+        player2 = ArtificialPlayer(name=f"{bot2_name} #2".upper(), path=f"cpp_bots/bin/{bot2_name}")
 
     game = QuartoGame(board, player1, player2)
     winner = game.start()
     if winner is not None:
-        Console.output("Zwyciężył bot %s" % winner)
+        Console.output(f"Zwyciężył {winner}")
     else:
         Console.output("Gra zakończyła się remisem")
-    input()
+    input("ENTER żeby kontynuować...")
 
 
 def show_rules():
     Console.output("Zasady gry Quarto: https://www.ultraboardgames.com/quarto/game-rules.php")
+    input("ENTER żeby kontynuować...")
 
 
+def choose_one_bot():  # helper function
+    Console.output("\nWybierz bota z którym chcesz zagrać:")
+    for index in range(1, BOTS_NUMBER + 1):
+        Console.output(f"{index}. Bot {index}")
+    Console.output("0. Powrót do menu")
+    choice = Console.input_number_in_range(f"Wybierz opcję (0-{BOTS_NUMBER}): ", 0, BOTS_NUMBER)
+    if choice == 0:
+        return
+
+    play_with_bot(f"bot{choice}")
+
+
+def choose_two_bots():  # helper function
+    Console.output("\nWybierz pierwszego bota:")
+    for index in range(1, BOTS_NUMBER + 1):
+        Console.output(f"{index}. Bot {index}")
+    Console.output("0. Powrót do menu")
+    first_bot = Console.input_number_in_range(f"Wybierz opcję (0-{BOTS_NUMBER}): ", 0, BOTS_NUMBER)
+    if first_bot == 0:
+        return
+
+    Console.output("\nWybierz drugiego bota:")
+    for index in range(1, BOTS_NUMBER + 1):
+        Console.output(f"{index}. Bot {index}")
+    Console.output("0. Powrót do menu")
+    second_bot = Console.input_number_in_range(f"Wybierz opcję (0-{BOTS_NUMBER}): ", 0, BOTS_NUMBER)
+    if second_bot == 0:
+        return
+
+    start_bot_battle(f"bot{first_bot}", f"bot{second_bot}")
+
+
+# Run menu
 if __name__ == "__main__":
-    while True:
-        start_menu(1)
-        choice = Console.input_number_in_range("Wybierz opcję (1-8): ", 1, 8)
-        if choice == 1:
-            play_with_human()
-        elif choice in [2, 3, 4]:
-            play_with_bot(choice - 1)
-        elif choice == 5:
-            start_menu(2)
-            choice = Console.input_number_in_range("Wybierz opcję (1-7): ", 1, 7)
-            if 1 <= choice <= 6:
-                start_bot_battle(choice)
-            elif choice == 7:
-                Console.clear_view()
-                continue
-        elif choice == 6:
-            Console.clear_view()
-            show_rules()
-            Console.output()
-        elif choice == 7:
-            Console.output("Dziękujemy za grę. Do widzenia!")
-            break
-        elif choice == 8:
-            play_via_network()
+    # Create main menu instance
+    main_menu = Menu()
+    main_menu.add_option("Graj z człowiekiem (lokalnie)", play_with_human)
+    main_menu.add_option("Graj z człowiekiem (przez sieć)", play_via_network)
+    main_menu.add_option("Graj z botem", choose_one_bot)
+    main_menu.add_option("Starcie botów", choose_two_bots)
+    main_menu.add_option("Zasady gry", show_rules)
 
-        # Po zakończeniu wybranej opcji, wykonaj grę Quarto
-        # Program wraca do menu po zakończeniu gry
+    main_menu.run()

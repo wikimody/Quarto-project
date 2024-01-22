@@ -2,8 +2,7 @@
 #include <iostream>
 #include <ctime>
 #include <string>
-#include <stdio.h>
-#include <cstring>
+#include <cstdlib>
 
 using namespace std;
 
@@ -19,17 +18,6 @@ int spr_wykorzystania(char postawione[17], int pionek, char pionki[16])
 
 int main(int argc, char *argv[])
 {
-    //sprawdzanie, czy dostalismy tylko jednego stringa
-    if (argc != 2){
-        fprintf (stderr, "Zla ilosc danych wejsciowych.\n");
-        return 1;
-    }
-    //  Sprawdzanie dlugosci stringa - nie wiedzialem czy na koncu wpisują nam znak konca '\0' czy nie, jak sie dowiem to odkomentuje
-    if ( strlen(argv[1]) != 17){
-        fprintf (stderr, "String ma miec 17 znakow.\n");
-        return 2;
-    }
-    
     char plansza[4][4], postawione[17];
     char pionki[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
     int licznik = 0;
@@ -54,11 +42,16 @@ int main(int argc, char *argv[])
         kolumna = rand() % 4;
     } while(plansza[wiersz][kolumna] != 'p');
 
-    do{
-        pionek = rand()%16;
-    } while(spr_wykorzystania(postawione,pionek, pionki) == 0);
+    pionek = 16;
+    for(int i = 0; i < 16; i++)
+    {
+        if(spr_wykorzystania(postawione, i, pionki) == 1)
+        {
+            pionek = i;
+            break;
+        }
+    }
 
-
-    cout << wiersz << kolumna << pionki[pionek] << "\n";
+    cout << wiersz+1 << kolumna+1 << pionki[pionek] << "\n";
     return 0;
 }

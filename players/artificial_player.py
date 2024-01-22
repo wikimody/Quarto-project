@@ -1,27 +1,28 @@
+import time
+
+import cpp_bots.cpp_adapter as cppA
+from quarto_game.board import Board
+from quarto_game.piece import Piece
 from .player import Player
 
 
-# Zaimplementowałem od razu najgłupszego możliwego bota
 class ArtificialPlayer(Player):
-    def __init__(self, name):
+    def __init__(self, name: str, path: str) -> None:
         self._name = name
-        # self._path = path
+        self._path = path
+        self._piece_number = -1
 
-    def choose_piece(self, pieces_values):  # pieces - lista wartości pionów (decymalna)
-        # W tym miejscu bot wybiera, którą figurę przekazać drugiemu graczowi
-        # Podanie niepoprawnej wartości może poskutkować błędem programu
-        # oczekiwana wartość: jedna z wartości listy pieces
-        return pieces_values[0]
+    def choose_piece(self, pieces: list) -> int:
+        if self._piece_number == -1:  # jeśli bot zaczyna to musi wylosować pierwszego piona
+            return pieces[int(time.time() % 16)]  # XD - ale jest to jakaś losowość (tak wiem, że jest random.choice)
+        return self._piece_number
 
-    def where_place_piece(self, piece=None, board=None):  # piece - obiekt klasy Piece
-        # W tym miejscu bot wybiera, gdzie postawić figurę
-        # Podanie niepoprawnej wartości poskutkuje ponownym wywołaniem funkcji (możliwa nieskończona pętla)
-        # oczekiwana wartość: krotka (a, b) [1 <= a,b <= 4]
+    def where_place_piece(self, piece: Piece, board: Board) -> list:
+        args = cppA.generate_args(board, piece.decimal())  # generujemy argument dla pliku cpp
+        result = cppA.execute_cpp(self._path, args)  # wykonujemy plik
+        result_list = cppA.receive_args(result)  # wyciągamy wyniki odpowiednio przetworzone
+        self._piece_number = result_list[2]  # wybrany przez bot pionek zapisujemy, żeby w odpowiednim momencie zwrócić
+        return (result_list[0], result_list[1])  # zwracamy wybrane miejsce
 
-        for row in range(1, 5):
-            for col in range(1, 5):
-                if board.is_avaliable(row, col):
-                    return row, col
-
-    def __str__(self):
+    def __str__(self) -> str:
         return self._name
