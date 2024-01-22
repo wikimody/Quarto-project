@@ -1,4 +1,4 @@
-from cpp_bots.cpp_adapter import CppAdapter
+import cpp_bots.cpp_adapter as cppA
 from .piece import Piece
 
 
@@ -23,7 +23,7 @@ class Board:
 
     # returns True if achieved Quarto, False otherwise
     def is_quarto(self):
-        out = CppAdapter.execute_cpp("cpp_bots/bin/is_quarto.exe", self.format())
+        out = cppA.execute_cpp("cpp_bots/bin/is_quarto", self.format())
         if out == "1":
             return True
         else:
