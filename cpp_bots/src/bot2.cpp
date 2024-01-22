@@ -166,14 +166,14 @@ int main(int argc, char *argv[])
         for(int j = 0; j < 4; j++)
         {
             plansza[i][j] = zamiana_pionkow(argv[1][licznik]);
-            cout << plansza[i][j] << " ";
+            //cout << plansza[i][j] << " ";
             if(argv[1][licznik] != 'p')
                 postawione[licznik] = zamiana_pionkow(argv[1][licznik]);
             licznik++;
 
             przegrana[i][j] = 0;
         }
-        cout << endl;
+        //cout << endl;
     }
     postawione[licznik] = zamiana_pionkow(argv[1][licznik]); // pionek ktory dostalismy
 
