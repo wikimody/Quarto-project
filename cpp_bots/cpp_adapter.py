@@ -32,7 +32,7 @@ def receive_args(receive : str) -> list:
 
 def compile_cpp(cpp_name, executable_name):
         compile_command = f"g++ -o {executable_name} {cpp_name}"
-        compilation_result = os.system(compile_command)
-        if compilation_result != 0:
+        compilation_result = subprocess.run(compile_command)
+        if compilation_result.returncode != 0:
             print(f"Compilation failed with error code {compilation_result}")
             exit()
