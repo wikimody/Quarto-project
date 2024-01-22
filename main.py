@@ -9,12 +9,14 @@ from quarto_game.menu import Menu
 from quarto_game.quarto_game import QuartoGame
 from quarto_game.quarto_via_network import QuartoViaNetwork
 
+BOTS_NUMBER = 2  # const
+
 
 def play_with_human():
     Console.clear_view()
     board = Board()
-    player1 = LocalPlayer(Console.input_text("Wprowadź nazwę pierwszego gracza: "))
-    player2 = LocalPlayer(Console.input_text("Wprowadź nazwę drugiego gracza: "))
+    player1 = LocalPlayer(Console.input_text("Wprowadź nazwę pierwszego gracza: ").upper())
+    player2 = LocalPlayer(Console.input_text("Wprowadź nazwę drugiego gracza: ").upper())
     game = QuartoGame(board, player1, player2)
     winner = game.start()
     if winner is not None:
@@ -29,14 +31,14 @@ def play_via_network():
     board = Board()
     if Console.input_yes_or_no("Czy ty zaczynasz grę?"):
         Console.clear_view()
-        player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: "))
+        player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: ").upper())
         player2 = RemotePlayer(Server())
         game = QuartoViaNetwork(board, player1, player2, 0)
     else:
         Console.clear_view()
-        player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: "))
+        player1 = LocalPlayer(Console.input_text("Wprowadź swój nickname: ").upper())
         Console.output("Wprowadź dane hosta:")
-        host = Console.input_text("IP / localhost: ")
+        host = Console.input_text("IP / localhost: ").lower()
         port = Console.input_number_in_range("Port: ", 1000, 99999)
         player2 = RemotePlayer(Client(host, port))
         game = QuartoViaNetwork(board, player1, player2, 1)
@@ -54,8 +56,8 @@ def play_via_network():
 def play_with_bot(bot_name):
     Console.clear_view()
     board = Board()
-    player1 = LocalPlayer(Console.input_text("Wprowadź swoją nazwę gracza: "))
-    player2 = ArtificialPlayer(name=f"{bot_name}", path=f"cpp_bots/bin/{bot_name}")
+    player1 = LocalPlayer(Console.input_text("Wprowadź swoją nazwę gracza: ").upper())
+    player2 = ArtificialPlayer(name=f"{bot_name}".upper(), path=f"cpp_bots/bin/{bot_name}")
     game = QuartoGame(board, player1, player2)
     winner = game.start()
     if winner == player1:
@@ -71,11 +73,11 @@ def start_bot_battle(bot1_name, bot2_name):
     Console.clear_view()
     board = Board()
     if bot1_name != bot2_name:
-        player1 = ArtificialPlayer(name=f"{bot1_name}", path=f"cpp_bots/bin/{bot1_name}")
-        player2 = ArtificialPlayer(name=f"{bot2_name}", path=f"cpp_bots/bin/{bot2_name}")
+        player1 = ArtificialPlayer(name=f"{bot1_name}".upper(), path=f"cpp_bots/bin/{bot1_name}")
+        player2 = ArtificialPlayer(name=f"{bot2_name}".upper(), path=f"cpp_bots/bin/{bot2_name}")
     else:
-        player1 = ArtificialPlayer(name=f"{bot1_name} #1", path=f"cpp_bots/bin/{bot1_name}")
-        player2 = ArtificialPlayer(name=f"{bot2_name} #2", path=f"cpp_bots/bin/{bot2_name}")
+        player1 = ArtificialPlayer(name=f"{bot1_name} #1".upper(), path=f"cpp_bots/bin/{bot1_name}")
+        player2 = ArtificialPlayer(name=f"{bot2_name} #2".upper(), path=f"cpp_bots/bin/{bot2_name}")
 
     game = QuartoGame(board, player1, player2)
     winner = game.start()
@@ -90,9 +92,8 @@ def show_rules():
     Console.output("Zasady gry Quarto: https://www.ultraboardgames.com/quarto/game-rules.php")
     input("ENTER żeby kontynuować...")
 
-def choose_one_bot():  # helper function
-    BOTS_NUMBER = 3
 
+def choose_one_bot():  # helper function
     Console.output("\nWybierz bota z którym chcesz zagrać:")
     for index in range(1, BOTS_NUMBER + 1):
         Console.output(f"{index}. Bot {index}")
@@ -105,8 +106,6 @@ def choose_one_bot():  # helper function
 
 
 def choose_two_bots():  # helper function
-    BOTS_NUMBER = 3
-
     Console.output("\nWybierz pierwszego bota:")
     for index in range(1, BOTS_NUMBER + 1):
         Console.output(f"{index}. Bot {index}")
