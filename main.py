@@ -101,7 +101,7 @@ def choose_one_bot():  # helper function
     if choice == 0:
         return
 
-    play_with_bot(f"bot{choice}.exe")
+    play_with_bot(f"bot{choice}")
 
 
 def choose_two_bots():  # helper function
@@ -123,7 +123,7 @@ def choose_two_bots():  # helper function
     if second_bot == 0:
         return
 
-    start_bot_battle(f"bot{first_bot}.exe", f"bot{second_bot}.exe")
+    start_bot_battle(f"bot{first_bot}", f"bot{second_bot}")
 
 
 # Run menu
