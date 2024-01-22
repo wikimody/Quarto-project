@@ -11,7 +11,7 @@ def execute_cpp(program_path : str, program_args : str) -> str:
 # przeglądamy tablicę i tworzymy napis, który odpowiada wyglądowi tablicy, a na końcu dopisujemy wybrany pionek
 def generate_args(board : Board, piece_choice : int) -> str:
     result = board.format()
-    result += hex(piece_choice)[2::]
+    result += hex(piece_choice)[2::].upper()
     return result
 
 # napis dzielimy na pojedyncze znaki i wybieramy nas interesują
